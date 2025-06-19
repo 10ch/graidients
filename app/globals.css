@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #fafafa;
+    --foreground: #333333;
+  }
+
+
+  body {
+    @apply bg-[--background] text-[--foreground];
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  /* Primary button - pink/rose with rounded corners */
+  .btn-primary {
+    @apply bg-[#e54d65] hover:bg-[#d43e56] text-white font-medium py-3 px-6 rounded-md transition-colors text-base;
+  }
+
+  /* Secondary button - gray outline */
+  .btn-secondary {
+    @apply bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2 px-4 rounded-md transition-colors text-sm;
+  }
+
+  /* Empty chart base */
+  .chart-container {
+    @apply bg-white rounded-lg p-6 border border-gray-200;
+  }
+
+  /* Chart axes and grid */
+  .chart-axis {
+    @apply text-xs text-gray-500;
+  }
+
+  /* Page container */
+  .page-container {
+    @apply min-h-screen bg-[#fafafa] flex flex-col;
+  }
+
+  /* Content wrapper */
+  .content-wrapper {
+    @apply max-w-6xl mx-auto w-full px-8;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
