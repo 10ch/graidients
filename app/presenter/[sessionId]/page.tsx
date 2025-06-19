@@ -53,11 +53,11 @@ export default function PresenterView() {
           filter: `question_id=eq.${currentQuestion.id}`,
         },
         () => {
-          // Debounce updates
+          // Debounce updates more aggressively for large audiences
           clearTimeout(timeout);
           timeout = setTimeout(() => {
             fetchResults();
-          }, 500);
+          }, 2000); // Increased to 2 seconds for 500+ users
         }
       )
       .subscribe();

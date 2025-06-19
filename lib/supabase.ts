@@ -9,7 +9,15 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
   realtime: {
     params: {
-      eventsPerSecond: 2,
+      eventsPerSecond: 1, // Reduced for large audiences
     },
+  },
+  db: {
+    schema: 'public',
+  },
+  global: {
+    fetch: (...args) => fetch(...args, {
+      next: { revalidate: 2 }, // Cache results for 2 seconds
+    }),
   },
 })

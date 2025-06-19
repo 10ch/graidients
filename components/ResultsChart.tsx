@@ -19,7 +19,7 @@ export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = f
     // Trigger animation after component mounts
     const timer = setTimeout(() => setAnimateResults(true), 100);
     return () => clearTimeout(timer);
-  }, []);
+  }, [results]); // Re-trigger when results change
 
   const ratings = results ? [
     results.rating_1,
@@ -68,33 +68,56 @@ export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = f
       )}
 
       <div className="h-full flex flex-col">
-        <div className="flex-1 flex items-end p-4">
-          <div className="w-full">
-            <div className="flex justify-between items-end h-64">
+        <div className="flex-1 p-6">
+          {/* Chart container with fixed height */}
+          <div className="h-full flex flex-col">
+            {/* Stats above bars */}
+            <div className="flex justify-between mb-4">
               {VOTE_OPTIONS.map((option, index) => {
                 const count = ratings[index];
                 const percentage = calculatePercentage(count, totalVotes);
-                const maxCount = Math.max(...ratings);
-                const heightPercentage = maxCount > 0 ? (count / maxCount) * 100 : 0;
                 
                 return (
-                  <div key={option.value} className="w-[15%] flex flex-col items-center">
-                    <div className="text-sm font-medium mb-2">{percentage}%</div>
-                    <div 
-                      className="w-full bg-blue-300 rounded-t transition-all duration-500 ease-out"
-                      style={{
-                        height: animateResults ? `${heightPercentage}%` : "0%",
-                        transitionDelay: `${index * 100}ms`,
-                      }}
-                    ></div>
-                    <div className="text-xs text-gray-500 mt-1">{count} votes</div>
+                  <div key={option.value} className="w-[15%] text-center">
+                    <div className="text-lg font-medium">{percentage}%</div>
+                    <div className="text-xs text-gray-500">{count} votes</div>
                   </div>
                 );
               })}
             </div>
-            <div className="flex justify-between mt-4 text-xs text-gray-600">
+            
+            {/* Chart bars */}
+            <div className="flex-1 flex items-end mb-4" style={{ height: "300px" }}>
+              <div className="w-full flex justify-between items-end h-full gap-4 px-4">
+                {VOTE_OPTIONS.map((option, index) => {
+                  const count = ratings[index];
+                  const maxCount = Math.max(...ratings);
+                  const heightPercentage = maxCount > 0 ? (count / maxCount) * 100 : 0;
+                  
+                  // Debug logging
+                  if (index === 0) {
+                    console.log('Chart data:', { count, maxCount, heightPercentage, animateResults });
+                  }
+                  
+                  return (
+                    <div 
+                      key={option.value} 
+                      className="flex-1 bg-gray-900 rounded-t transition-all duration-700 ease-out"
+                      style={{
+                        height: animateResults && count > 0 ? `${heightPercentage}%` : "4px",
+                        transitionDelay: `${index * 100}ms`,
+                        minHeight: count > 0 ? "12px" : "4px",
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            
+            {/* Labels */}
+            <div className="flex justify-between">
               {VOTE_OPTIONS.map((option) => (
-                <div key={option.value} className="w-[15%] text-center">
+                <div key={option.value} className="flex-1 text-center text-xs text-gray-600">
                   <div>{option.label.split(' ')[0]}</div>
                   <div>{option.label.split(' ')[1]}</div>
                 </div>

@@ -1,0 +1,48 @@
+config:
+  target: "http://localhost:3000"  # Change to your production URL
+  phases:
+    - duration: 20
+      arrivalRate: 5
+      name: "Warm up"
+    - duration: 30
+      arrivalRate: 30
+      name: "Ramp to 30 users/sec"
+    - duration: 60
+      arrivalRate: 75
+      name: "Ramp to 75 users/sec"
+    - duration: 120
+      arrivalRate: 150
+      name: "Sustained 150 users"
+  processor: "./vote-processor.js"
+
+scenarios:
+  - name: "User voting flow"
+    flow:
+      # Generate unique data for each virtual user
+      - function: "generateVoteData"
+      
+      # First, load the vote page (simulates QR code scan)
+      - get:
+          url: "/vote/{{ questionId }}"
+          expect:
+            - statusCode: 200
+      
+      # Brief pause to "read" the question
+      - think: 2
+      
+      # Submit vote using direct Supabase call simulation
+      # Note: Update this based on your actual implementation
+      - post:
+          url: "/api/votes"
+          headers:
+            Content-Type: "application/json"
+            X-User-Fingerprint: "{{ fingerprint }}"
+          json:
+            questionId: "{{ questionId }}"
+            rating: "{{ rating }}"
+            voterFingerprint: "{{ fingerprint }}"
+          expect:
+            - statusCode: 200
+          capture:
+            - json: "$.success"
+              as: "voteSuccess"
