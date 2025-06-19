@@ -6,9 +6,9 @@ export function Logo({ className = "" }: { className?: string }) {
       <Image
         src="/logo.svg"
         alt="Graidients - Center for Digital Thriving"
-        width={300}
-        height={87}
-        className="w-auto h-[72px]"
+        width={450}
+        height={130}
+        className="w-auto h-[108px]"
         priority
       />
     </div>
