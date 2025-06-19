@@ -1,16 +1,16 @@
+import Image from "next/image";
+
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <div className={`${className}`}>
-      <h1 className="text-4xl font-normal text-gray-600 flex items-center justify-center">
-        <span>gr</span>
-        <span className="inline-flex items-center justify-center w-[50px] h-[50px] border-2 border-dashed border-gray-500 rounded mx-1">
-          <span className="text-black font-semibold">ai</span>
-        </span>
-        <span>dients</span>
-      </h1>
-      <p className="text-center text-gray-600 text-xs tracking-[0.2em] mt-2 uppercase">
-        Center for Digital Thriving
-      </p>
+      <Image
+        src="/logo.svg"
+        alt="Graidients - Center for Digital Thriving"
+        width={200}
+        height={58}
+        className="w-auto h-12"
+        priority
+      />
     </div>
   );
 }
