@@ -11,7 +11,7 @@ const MAX_REQUESTS_PER_USER = 10; // Per user fingerprint
 export function middleware(request: NextRequest) {
   // Only apply rate limiting to API routes
   if (request.nextUrl.pathname.startsWith('/api/')) {
-    const ip = request.ip || request.headers.get('x-forwarded-for') || 'anonymous';
+    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'anonymous';
     const userFingerprint = request.headers.get('x-user-fingerprint') || '';
     const now = Date.now();
     
