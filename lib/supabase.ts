@@ -15,9 +15,4 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   db: {
     schema: 'public',
   },
-  global: {
-    fetch: (...args) => fetch(...args, {
-      next: { revalidate: 2 }, // Cache results for 2 seconds
-    }),
-  },
 })

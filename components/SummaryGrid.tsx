@@ -34,29 +34,38 @@ export function SummaryGrid({ questions }: SummaryGridProps) {
               {question.question_text}
             </h3>
             
-            <div className="h-40 flex items-end">
-              <div className="w-full flex justify-between items-end">
+            <div className="h-32 flex items-end mb-2">
+              <div className="w-full flex justify-between items-end h-full gap-1">
                 {ratings.map((count, index) => {
                   const heightPercentage = maxCount > 0 ? (count / maxCount) * 100 : 0;
+                  const percentage = calculatePercentage(count, question.total_votes);
                   
                   return (
-                    <div
-                      key={index}
-                      className="w-[15%] bg-blue-300 rounded-t transition-all duration-500"
-                      style={{ height: `${heightPercentage}%` }}
-                    />
+                    <div key={index} className="flex-1 flex flex-col items-center justify-end h-full">
+                      <div className="text-xs font-medium mb-1">{percentage}%</div>
+                      <div
+                        className="w-full bg-gray-900 rounded-t transition-all duration-500"
+                        style={{ 
+                          height: `${heightPercentage}%`,
+                          minHeight: count > 0 ? "4px" : "2px"
+                        }}
+                      />
+                    </div>
                   );
                 })}
               </div>
             </div>
             
             <div className="mt-2 pt-2 border-t border-gray-200">
-              <div className="flex justify-between text-xs text-gray-500">
+              <div className="flex justify-between text-xs text-gray-500 mb-1">
                 <span>TF</span>
                 <span>MO</span>
                 <span>EW</span>
                 <span>FS</span>
                 <span>CL</span>
+              </div>
+              <div className="text-center text-xs text-gray-600 font-medium">
+                {question.total_votes} votes
               </div>
             </div>
           </div>
