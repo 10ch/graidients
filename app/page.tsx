@@ -36,12 +36,12 @@ export default function Home() {
     <div className="page-container items-center justify-center">
       <div className="content-wrapper">
         <div className="flex flex-col items-center">
-          <Logo className="mb-16" />
+          <Logo className="mb-8" />
           
           <button
             onClick={handleStartSession}
             disabled={isCreating}
-            className="btn-primary disabled:opacity-50 mb-24"
+            className="btn-primary disabled:opacity-50 mb-12"
           >
             {isCreating ? "Creating Session..." : "Start a Session"}
           </button>

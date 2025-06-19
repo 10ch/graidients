@@ -1,6 +1,6 @@
 export function EmptyChart() {
   return (
-    <div className="chart-container h-64">
+    <div className="chart-container h-[500px]">
       <div className="h-full flex flex-col">
         {/* Y-axis labels */}
         <div className="flex-1 flex">
