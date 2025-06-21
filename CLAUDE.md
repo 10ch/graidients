@@ -10,6 +10,7 @@ This is an interactive real-time polling application for AI ethics presentations
 - **5-point Likert scale**: From "Totally Fine" to "Crosses a Line"
 - **Secure voting**: One vote per device per question using fingerprinting
 - **Summary views**: Session and overall dashboard views
+- **Custom branding**: Logo links to home, professional SVG assets
 
 ## Tech Stack
 - Next.js 14 with TypeScript
@@ -27,35 +28,58 @@ This is an interactive real-time polling application for AI ethics presentations
 
 ## Security Measures
 - Input sanitization to prevent XSS
-- Rate limiting (50 requests/minute per IP)
+- Rate limiting (1000 requests/minute per IP for shared WiFi)
 - Vote validation (1-5 range only)
 - Duplicate vote prevention
 - Questions cannot be edited after creation
 
 ## User Flow
 1. Presenter starts session → Creates session ID
-2. Presenter enters question → Generates QR code
+2. Presenter enters AI use case → Generates QR code
 3. Audience scans QR → Opens mobile voting page
 4. Users select rating → Vote recorded with fingerprint
 5. Presenter closes voting → Shows animated results
 6. Can add more questions or view session summary
 
 ## Performance Optimizations
-- Debounced real-time updates (500ms)
+- Debounced real-time updates (2000ms for large audiences)
 - Database indexes on critical queries
 - Static generation for vote pages
 - Connection pooling for Supabase
 - Optimistic UI updates
+- Reduced real-time events (1/sec)
+
+## UI Improvements (Latest)
+- Increased logo size and made it clickable (links to home)
+- Reduced whitespace in presenter view
+- Taller charts (500px) for better visibility
+- Question prompt: "Describe a use of AI..."
+- QR view shows: "How do you feel about using AI to [use case]?"
+- Results show: "Using AI to [use case]."
+- Vote count displayed below question on QR screen
+- Centered question text in matching-height boxes
+- Professional favicon and logo SVGs
+
+## Testing Tools
+- **Load testing**: `node load-testing/quick-test.js <URL> <QUESTION_ID> <NUM_USERS>`
+- **Custom vote distributions**: `node load-testing/custom-votes.js <URL> <QUESTION_ID> <NUM_VOTES> <PATTERN>`
+  - Patterns: `random`, `skew-low`, `skew-high`, `bimodal`, `polarized`, `normal`
+  - Example: `node load-testing/custom-votes.js https://app.graidients.ai abc-123 100 bimodal`
 
 ## Commands
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run lint` - Run ESLint
+- `npm test` - Run tests
+- `npm run test:coverage` - Run tests with coverage
 
 ## Environment Variables
 - `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous key
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous key (no line breaks!)
 - `NEXT_PUBLIC_APP_URL` - Application URL for QR codes
 
 ## Deployment
-Ready for Vercel deployment with environment variables configured.
+- Deployed on Vercel at `app.graidients.ai`
+- Environment variables must be properly formatted (no line breaks)
+- Supabase authentication URLs configured for production domain
+- DNS: CNAME record pointing to Vercel deployment
