@@ -159,10 +159,7 @@ export default function PresenterView() {
         )}
 
         {viewMode === "voting" && currentQuestion && (
-          <div className="w-full max-w-4xl animate-fade-in">
-            <h2 className="text-2xl font-semibold mb-8 text-center text-gray-800">
-              {currentQuestion.question_text}
-            </h2>
+          <div className="w-full max-w-6xl animate-fade-in">
             <div className="flex gap-8">
               <div className="flex-1">
                 <QRCodeDisplay
@@ -171,8 +168,13 @@ export default function PresenterView() {
                 />
               </div>
               <div className="flex-1">
-                <div className="h-[500px] bg-white rounded-lg shadow-sm p-8">
-                  <ResultsChart results={results} isLive={true} />
+                <div className="bg-white rounded-lg shadow-sm p-8">
+                  <h2 className="text-3xl font-semibold mb-6 text-gray-800">
+                    {currentQuestion.question_text}
+                  </h2>
+                  <p className="text-xl text-gray-600">
+                    Total Votes: {results?.total_votes || 0}
+                  </p>
                 </div>
               </div>
             </div>
@@ -181,9 +183,6 @@ export default function PresenterView() {
 
         {viewMode === "results" && results && currentQuestion && (
           <div className="w-full max-w-4xl animate-fade-in">
-            <h2 className="text-2xl font-semibold mb-8 text-center text-gray-800">
-              {currentQuestion.question_text}
-            </h2>
             <div className="bg-white rounded-lg shadow-sm p-8">
               <ResultsChart
                 results={results}
