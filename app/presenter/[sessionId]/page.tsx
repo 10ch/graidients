@@ -127,39 +127,51 @@ export default function PresenterView() {
 
   return (
     <div className="min-h-screen flex flex-col p-8 bg-gray-50">
-      <header className="mb-12 text-center">
+      <header className="mb-6 text-center">
         <Logo className="mx-auto" />
       </header>
 
-      <main className="flex-1 flex items-center justify-center">
+      <main className="flex-1 flex flex-col">
         {viewMode === "input" && (
-          <div className="w-full max-w-4xl animate-fade-in">
+          <div className="w-full max-w-4xl mx-auto animate-fade-in">
             <div className="bg-white rounded-lg shadow-sm p-8">
               <QuestionInput onSubmit={handleSubmitQuestion} isLoading={isLoading} />
             </div>
-            <div className="mt-8 h-64 bg-white rounded-lg shadow-sm p-8">
-              <div className="h-full flex items-end">
-                <div className="w-full flex justify-between items-end">
-                  <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
-                  <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
-                  <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
-                  <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
-                  <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
+            <div className="mt-8 h-[500px] bg-white rounded-lg shadow-sm p-8">
+              <div className="h-full flex flex-col">
+                <div className="flex-1 flex items-end">
+                  <div className="w-full flex justify-between items-end">
+                    <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
+                    <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
+                    <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
+                    <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
+                    <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex justify-between mt-4 text-sm text-gray-600">
-                <span>Totally<br/>Fine</span>
-                <span>Mostly<br/>Okay</span>
-                <span>Either<br/>Way</span>
-                <span>Feels<br/>Sketchy</span>
-                <span>Crosses<br/>a Line</span>
+                <div className="flex justify-between mt-4 text-sm text-gray-600">
+                  <div className="w-[15%] text-center">
+                    <span>Totally<br/>Fine</span>
+                  </div>
+                  <div className="w-[15%] text-center">
+                    <span>Mostly<br/>Okay</span>
+                  </div>
+                  <div className="w-[15%] text-center">
+                    <span>Either<br/>Way</span>
+                  </div>
+                  <div className="w-[15%] text-center">
+                    <span>Feels<br/>Sketchy</span>
+                  </div>
+                  <div className="w-[15%] text-center">
+                    <span>Crosses<br/>a Line</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         )}
 
         {viewMode === "voting" && currentQuestion && (
-          <div className="w-full max-w-6xl animate-fade-in">
+          <div className="w-full max-w-6xl mx-auto animate-fade-in">
             <div className="flex gap-8">
               <div className="flex-1">
                 <QRCodeDisplay
@@ -168,13 +180,15 @@ export default function PresenterView() {
                 />
               </div>
               <div className="flex-1">
-                <div className="bg-white rounded-lg shadow-sm p-8">
-                  <h2 className="text-3xl font-semibold mb-6 text-gray-800">
-                    {currentQuestion.question_text}
-                  </h2>
-                  <p className="text-xl text-gray-600">
-                    Total Votes: {results?.total_votes || 0}
-                  </p>
+                <div className="bg-white rounded-lg shadow-sm p-8 h-full flex flex-col items-center justify-center">
+                  <div className="text-center">
+                    <h2 className="text-5xl font-semibold text-gray-800 mb-8">
+                      How do you feel about using AI to {currentQuestion.question_text}?
+                    </h2>
+                    <p className="text-xl text-gray-600">
+                      Total Votes: {results?.total_votes || 0}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -182,7 +196,7 @@ export default function PresenterView() {
         )}
 
         {viewMode === "results" && results && currentQuestion && (
-          <div className="w-full max-w-4xl animate-fade-in">
+          <div className="w-full max-w-4xl mx-auto animate-fade-in">
             <div className="bg-white rounded-lg shadow-sm p-8">
               <ResultsChart
                 results={results}

@@ -63,7 +63,7 @@ export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = f
     <div className="w-full">
       {!isLive && results && (
         <h2 className="text-2xl font-semibold mb-8 text-center text-gray-800">
-          {results.question_text}
+          Using AI to {results.question_text}.
         </h2>
       )}
 
