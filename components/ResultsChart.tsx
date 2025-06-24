@@ -46,17 +46,8 @@ export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = f
           <div className="flex justify-between mt-4 text-sm text-gray-900 font-bold">
             {VOTE_OPTIONS.map((option) => (
               <div key={option.value} className="w-[15%] text-center">
-                {option.label === "Could Go Either Way" ? (
-                  <>
-                    <div>Could Go</div>
-                    <div>Either Way</div>
-                  </>
-                ) : (
-                  <>
-                    <div>{option.label.split(' ')[0]}</div>
-                    <div>{option.label.split(' ').slice(1).join(' ')}</div>
-                  </>
-                )}
+                <div>{option.label.split(' ')[0]}</div>
+                <div>{option.label.split(' ').slice(1).join(' ')}</div>
               </div>
             ))}
           </div>
@@ -127,17 +118,8 @@ export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = f
             <div className="flex justify-between">
               {VOTE_OPTIONS.map((option) => (
                 <div key={option.value} className="flex-1 text-center text-sm text-gray-900 font-bold px-1">
-                  {option.label === "Could Go Either Way" ? (
-                    <>
-                      <div>Could Go</div>
-                      <div>Either Way</div>
-                    </>
-                  ) : (
-                    <>
-                      <div>{option.label.split(' ')[0]}</div>
-                      <div>{option.label.split(' ').slice(1).join(' ')}</div>
-                    </>
-                  )}
+                  <div>{option.label.split(' ')[0]}</div>
+                  <div>{option.label.split(' ').slice(1).join(' ')}</div>
                 </div>
               ))}
             </div>
