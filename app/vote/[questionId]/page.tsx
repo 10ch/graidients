@@ -7,7 +7,7 @@ import { VotingButton } from "@/components/VotingButton";
 import { supabase } from "@/lib/supabase";
 import { Question } from "@/lib/types";
 import { VOTE_OPTIONS } from "@/lib/types";
-import { getVoterFingerprint, hasVotedOnQuestion, markVoted } from "@/lib/utils";
+import { getVoterFingerprint, hasVotedOnQuestion, markVoted, getVotedRating } from "@/lib/utils";
 
 export default function VotingView() {
   const params = useParams();
@@ -20,9 +20,13 @@ export default function VotingView() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if already voted
+    // Check if already voted and get the rating
     if (hasVotedOnQuestion(questionId)) {
       setHasVoted(true);
+      const savedRating = getVotedRating(questionId);
+      if (savedRating) {
+        setSelectedRating(savedRating);
+      }
     }
 
     // Fetch question details
@@ -62,14 +66,14 @@ export default function VotingView() {
         // Check if it's a duplicate vote error
         if (error.code === "23505") {
           setHasVoted(true);
-          markVoted(questionId);
+          markVoted(questionId, selectedRating);
         } else {
           throw error;
         }
       } else {
         // Successfully voted
         setHasVoted(true);
-        markVoted(questionId);
+        markVoted(questionId, selectedRating);
       }
     } catch (error) {
       console.error("Error submitting vote:", error);

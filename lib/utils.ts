@@ -18,10 +18,20 @@ export function hasVotedOnQuestion(questionId: string): boolean {
   return localStorage.getItem(`voted_${questionId}`) === 'true';
 }
 
-// Mark a question as voted
-export function markVoted(questionId: string): void {
+// Mark a question as voted with the rating
+export function markVoted(questionId: string, rating?: number): void {
   if (typeof window === 'undefined') return;
   localStorage.setItem(`voted_${questionId}`, 'true');
+  if (rating) {
+    localStorage.setItem(`vote_rating_${questionId}`, rating.toString());
+  }
+}
+
+// Get the rating for a voted question
+export function getVotedRating(questionId: string): number | null {
+  if (typeof window === 'undefined') return null;
+  const rating = localStorage.getItem(`vote_rating_${questionId}`);
+  return rating ? parseInt(rating) : null;
 }
 
 // Calculate percentage for results
