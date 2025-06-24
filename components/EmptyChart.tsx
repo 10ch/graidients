@@ -54,8 +54,8 @@ export function EmptyChart() {
                 <div className="chart-axis">Okay</div>
               </div>
               <div className="w-[15%]">
-                <div className="chart-axis">Either</div>
-                <div className="chart-axis">Way</div>
+                <div className="chart-axis">Not</div>
+                <div className="chart-axis">Sure</div>
               </div>
               <div className="w-[15%]">
                 <div className="chart-axis">Feels</div>
@@ -63,7 +63,7 @@ export function EmptyChart() {
               </div>
               <div className="w-[15%]">
                 <div className="chart-axis">Crosses</div>
-                <div className="chart-axis">a Line</div>
+                <div className="chart-axis">Line</div>
               </div>
             </div>
           </div>

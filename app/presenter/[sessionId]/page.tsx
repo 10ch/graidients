@@ -148,7 +148,7 @@ export default function PresenterView() {
                     <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
                   </div>
                 </div>
-                <div className="flex justify-between mt-4 text-sm text-gray-600">
+                <div className="flex justify-between mt-4 text-sm text-gray-900 font-bold">
                   <div className="w-[15%] text-center">
                     <span>Totally<br/>Fine</span>
                   </div>
@@ -156,13 +156,13 @@ export default function PresenterView() {
                     <span>Mostly<br/>Okay</span>
                   </div>
                   <div className="w-[15%] text-center">
-                    <span>Either<br/>Way</span>
+                    <span>Not<br/>Sure</span>
                   </div>
                   <div className="w-[15%] text-center">
                     <span>Feels<br/>Sketchy</span>
                   </div>
                   <div className="w-[15%] text-center">
-                    <span>Crosses<br/>a Line</span>
+                    <span>Crosses<br/>Line</span>
                   </div>
                 </div>
               </div>
