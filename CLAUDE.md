@@ -7,7 +7,7 @@ This is an interactive real-time polling application for AI ethics presentations
 - **Session-based polling**: Each presentation gets a unique session ID
 - **QR code voting**: Audience members scan to vote on mobile devices
 - **Real-time results**: Live updates using Supabase subscriptions
-- **5-point Likert scale**: From "Totally Fine" to "Crosses a Line"
+- **5-point Likert scale**: From "Totally Fine" to "Crosses Line"
 - **Secure voting**: One vote per device per question using fingerprinting
 - **Summary views**: Session and overall dashboard views
 - **Custom branding**: Logo links to home, professional SVG assets
@@ -48,8 +48,13 @@ This is an interactive real-time polling application for AI ethics presentations
 - Connection pooling for Supabase
 - Optimistic UI updates
 - Reduced real-time events (1/sec)
+- Verified ready for 200+ concurrent users at Harvard event
 
 ## UI Improvements (Latest)
+- **Chart Labels**: Bold, larger (text-sm), darker (gray-900) for visibility
+- **Vote Options**: Simplified to "Totally Fine", "Mostly Okay", "Not Sure", "Feels Sketchy", "Crosses Line"
+- **Vote Confirmation**: Clean design showing "Your vote has been recorded" with inline display of choice
+- **Persistent Vote Display**: Vote choices saved in localStorage and displayed on confirmation
 - Increased logo size and made it clickable (links to home)
 - Reduced whitespace in presenter view
 - Taller charts (500px) for better visibility
@@ -62,6 +67,7 @@ This is an interactive real-time polling application for AI ethics presentations
 
 ## Testing Tools
 - **Load testing**: `node load-testing/quick-test.js <URL> <QUESTION_ID> <NUM_USERS>`
+- **Harvard event test**: `node load-testing/harvard-test.js <SESSION_ID>` - Simulates 200 users voting on 7 questions
 - **Custom vote distributions**: `node load-testing/custom-votes.js <URL> <QUESTION_ID> <NUM_VOTES> <PATTERN>`
   - Patterns: `random`, `skew-low`, `skew-high`, `bimodal`, `polarized`, `normal`
   - Example: `node load-testing/custom-votes.js https://app.graidients.ai abc-123 100 bimodal`
