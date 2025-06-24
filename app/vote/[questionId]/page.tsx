@@ -114,21 +114,19 @@ export default function VotingView() {
   }
 
   if (hasVoted) {
+    const votedOption = selectedRating ? VOTE_OPTIONS[selectedRating - 1].label : "your choice";
+    
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-white">
         <Logo className="mb-12" />
         
         <div className="max-w-sm w-full text-center animate-fade-in">
-          <h2 className="text-lg mb-6">You voted that you feel:</h2>
+          <h2 className="text-xl font-medium mb-12">Your vote has been recorded.</h2>
           
-          <div className="bg-rose-500 text-white px-6 py-4 rounded-lg mb-8">
-            <p className="text-xl font-medium">
-              {selectedRating ? VOTE_OPTIONS[selectedRating - 1].label : "Vote Recorded"}
-            </p>
-          </div>
-          
-          <p className="text-gray-600 mb-2">About using AI to:</p>
-          <p className="text-gray-800 font-medium mb-12">{question.question_text}</p>
+          <p className="text-lg text-gray-700 mb-12">
+            You feel <strong>{votedOption}</strong> about<br />
+            using AI to <strong>{question.question_text}</strong>.
+          </p>
           
           <div className="space-y-2 text-gray-600">
             <p>Please wait for the voting to close.</p>
