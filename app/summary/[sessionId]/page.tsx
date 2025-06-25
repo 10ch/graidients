@@ -12,9 +12,9 @@ export default function SessionSummary() {
   const params = useParams();
   const router = useRouter();
   const sessionId = params.sessionId as string;
-  
+
   const [questions, setQuestions] = useState<VoteSummary[]>([]);
-  const [sessionDate, setSessionDate] = useState<string>("");
+  const [_sessionDate, setSessionDate] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function SessionSummary() {
     fetchSessionData();
   }, [sessionId]);
 
-  const totalVotes = questions.reduce((sum, q) => sum + q.total_votes, 0);
+  const _totalVotes = questions.reduce((sum, q) => sum + q.total_votes, 0);
 
   if (isLoading) {
     return (
@@ -80,10 +80,7 @@ export default function SessionSummary() {
         )}
 
         <div className="mt-12 text-center">
-          <button
-            onClick={() => router.push(`/presenter/${sessionId}`)}
-            className="btn-primary"
-          >
+          <button onClick={() => router.push(`/presenter/${sessionId}`)} className="btn-primary">
             Back to Presenter View
           </button>
         </div>

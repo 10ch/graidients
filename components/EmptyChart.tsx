@@ -17,7 +17,7 @@ export function EmptyChart() {
             <span className="chart-axis">10</span>
             <span className="chart-axis">0</span>
           </div>
-          
+
           {/* Chart area with grid lines */}
           <div className="flex-1 relative">
             {/* Horizontal grid lines */}
@@ -26,7 +26,7 @@ export function EmptyChart() {
                 <div key={i} className="border-t border-gray-200"></div>
               ))}
             </div>
-            
+
             {/* Bars container */}
             <div className="absolute inset-0 flex items-end px-8">
               <div className="w-full flex justify-between items-end">
@@ -39,7 +39,7 @@ export function EmptyChart() {
             </div>
           </div>
         </div>
-        
+
         {/* X-axis labels */}
         <div className="flex mt-2">
           <div className="w-12"></div>

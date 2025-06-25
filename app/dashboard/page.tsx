@@ -24,27 +24,36 @@ export default function Dashboard() {
         // Fetch all sessions with their stats
         const { data, error } = await supabase
           .from("sessions")
-          .select(`
+          .select(
+            `
             id,
             created_at,
             questions (
               id,
               votes (id)
             )
-          `)
+          `
+          )
           .order("created_at", { ascending: false });
 
         if (!error && data) {
-          const sessionsWithStats = data.map((session: any) => ({
-            id: session.id,
-            created_at: session.created_at,
-            question_count: session.questions?.length || 0,
-            total_votes: session.questions?.reduce(
-              (sum: number, q: any) => sum + (q.votes?.length || 0),
-              0
-            ) || 0,
-          }));
-          
+          const sessionsWithStats = data.map(
+            (session: {
+              id: string;
+              created_at: string;
+              questions?: Array<{ votes?: Array<unknown> }>;
+            }) => ({
+              id: session.id,
+              created_at: session.created_at,
+              question_count: session.questions?.length || 0,
+              total_votes:
+                session.questions?.reduce(
+                  (sum: number, q: { votes?: Array<unknown> }) => sum + (q.votes?.length || 0),
+                  0
+                ) || 0,
+            })
+          );
+
           setSessions(sessionsWithStats);
         }
       } catch (error) {
@@ -77,9 +86,7 @@ export default function Dashboard() {
       <div className="max-w-6xl mx-auto">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-medium mb-2">All Sessions</h1>
-          <p className="text-gray-600">
-            {sessions.length} total sessions
-          </p>
+          <p className="text-gray-600">{sessions.length} total sessions</p>
         </div>
 
         {sessions.length > 0 ? (
@@ -90,17 +97,13 @@ export default function Dashboard() {
                 onClick={() => router.push(`/summary/${session.id}`)}
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
               >
-                <h3 className="text-lg font-medium mb-2">
-                  {formatDate(session.created_at)}
-                </h3>
+                <h3 className="text-lg font-medium mb-2">{formatDate(session.created_at)}</h3>
                 <div className="space-y-1 text-gray-600">
                   <p>{session.question_count} questions</p>
                   <p>{session.total_votes} total votes</p>
                 </div>
                 <div className="mt-4 text-right">
-                  <span className="text-sm text-red-500 hover:text-red-600">
-                    View Summary →
-                  </span>
+                  <span className="text-sm text-red-500 hover:text-red-600">View Summary →</span>
                 </div>
               </div>
             ))}

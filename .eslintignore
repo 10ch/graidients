@@ -1,0 +1,16 @@
+# Dependencies
+node_modules
+.next
+out
+build
+
+# Testing
+coverage
+
+# Misc
+.DS_Store
+*.log
+
+# Generated files
+public/sw.js
+public/workbox-*.js

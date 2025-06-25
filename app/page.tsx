@@ -12,14 +12,10 @@ export default function Home() {
 
   const handleStartSession = async () => {
     setIsCreating(true);
-    
+
     try {
       // Create a new session
-      const { data, error } = await supabase
-        .from("sessions")
-        .insert({})
-        .select()
-        .single();
+      const { data, error } = await supabase.from("sessions").insert({}).select().single();
 
       if (error) throw error;
 
@@ -37,7 +33,7 @@ export default function Home() {
       <div className="content-wrapper">
         <div className="flex flex-col items-center">
           <Logo className="mb-8" />
-          
+
           <button
             onClick={handleStartSession}
             disabled={isCreating}
@@ -46,7 +42,7 @@ export default function Home() {
             {isCreating ? "Creating Session..." : "Start a Session"}
           </button>
         </div>
-        
+
         <EmptyChart />
       </div>
     </div>

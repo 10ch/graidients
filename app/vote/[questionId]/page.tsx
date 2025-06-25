@@ -12,7 +12,7 @@ import { getVoterFingerprint, hasVotedOnQuestion, markVoted, getVotedRating } fr
 export default function VotingView() {
   const params = useParams();
   const questionId = params.questionId as string;
-  
+
   const [question, setQuestion] = useState<Question | null>(null);
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [hasVoted, setHasVoted] = useState(false);
@@ -54,13 +54,11 @@ export default function VotingView() {
     try {
       const fingerprint = getVoterFingerprint();
 
-      const { error } = await supabase
-        .from("votes")
-        .insert({
-          question_id: questionId,
-          rating: selectedRating,
-          voter_fingerprint: fingerprint,
-        });
+      const { error } = await supabase.from("votes").insert({
+        question_id: questionId,
+        rating: selectedRating,
+        voter_fingerprint: fingerprint,
+      });
 
       if (error) {
         // Check if it's a duplicate vote error
@@ -119,19 +117,20 @@ export default function VotingView() {
 
   if (hasVoted) {
     const votedOption = selectedRating ? VOTE_OPTIONS[selectedRating - 1].label : "your choice";
-    
+
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-white">
         <Logo className="mb-12" />
-        
+
         <div className="max-w-sm w-full text-center animate-fade-in">
           <h2 className="text-xl font-medium mb-12">Your vote has been recorded.</h2>
-          
+
           <p className="text-lg text-gray-700 mb-12">
-            You feel <strong>{votedOption}</strong> about<br />
+            You feel <strong>{votedOption}</strong> about
+            <br />
             using AI to <strong>{question.question_text}</strong>.
           </p>
-          
+
           <div className="space-y-2 text-gray-600">
             <p>Please wait for the voting to close.</p>
             <p>Results will be tabulated on screen.</p>

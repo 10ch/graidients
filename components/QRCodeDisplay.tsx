@@ -41,21 +41,17 @@ export function QRCodeDisplay({ questionId, onClose }: QRCodeDisplayProps) {
         {loading ? (
           <div className="w-[400px] h-[400px] bg-gray-100 animate-pulse rounded mx-auto" />
         ) : (
-          <img
-            src={qrCode}
-            alt="QR Code for voting"
-            className="w-[400px] h-[400px] mx-auto"
-          />
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={qrCode} alt="QR Code for voting" className="w-[400px] h-[400px] mx-auto" />
+          </>
         )}
       </div>
-      
-      <p className="text-gray-600 mb-2">Can't scan? Visit:</p>
+
+      <p className="text-gray-600 mb-2">Can&apos;t scan? Visit:</p>
       <p className="text-sm font-mono text-gray-700 mb-6 break-all">{voteUrl}</p>
-      
-      <button
-        onClick={onClose}
-        className="btn-primary"
-      >
+
+      <button onClick={onClose} className="btn-primary">
         Close Vote
       </button>
     </div>

@@ -12,7 +12,12 @@ interface ResultsChartProps {
   isLive?: boolean;
 }
 
-export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = false }: ResultsChartProps) {
+export function ResultsChart({
+  results,
+  onNewQuestion,
+  onViewSummary,
+  isLive = false,
+}: ResultsChartProps) {
   const [animateResults, setAnimateResults] = useState(false);
 
   useEffect(() => {
@@ -21,14 +26,10 @@ export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = f
     return () => clearTimeout(timer);
   }, [results]); // Re-trigger when results change
 
-  const ratings = results ? [
-    results.rating_1,
-    results.rating_2,
-    results.rating_3,
-    results.rating_4,
-    results.rating_5,
-  ] : [0, 0, 0, 0, 0];
-  
+  const ratings = results
+    ? [results.rating_1, results.rating_2, results.rating_3, results.rating_4, results.rating_5]
+    : [0, 0, 0, 0, 0];
+
   const totalVotes = results?.total_votes || 0;
 
   if (!results && isLive) {
@@ -37,23 +38,24 @@ export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = f
       <div className="h-full flex items-end p-4">
         <div className="w-full">
           <div className="flex justify-between items-end h-64">
-            {VOTE_OPTIONS.map((option, index) => (
+            {VOTE_OPTIONS.map((option, _index) => (
               <div key={option.value} className="w-[15%] flex flex-col items-center">
-                <div className="w-full bg-gray-200 rounded-t transition-all duration-500" style={{ height: "4px" }}></div>
+                <div
+                  className="w-full bg-gray-200 rounded-t transition-all duration-500"
+                  style={{ height: "4px" }}
+                ></div>
               </div>
             ))}
           </div>
           <div className="flex justify-between mt-4 text-sm text-gray-900 font-bold">
             {VOTE_OPTIONS.map((option) => (
               <div key={option.value} className="w-[15%] text-center">
-                <div>{option.label.split(' ')[0]}</div>
-                <div>{option.label.split(' ').slice(1).join(' ')}</div>
+                <div>{option.label.split(" ")[0]}</div>
+                <div>{option.label.split(" ").slice(1).join(" ")}</div>
               </div>
             ))}
           </div>
-          <div className="text-center mt-6 text-gray-500">
-            Total Votes: 0
-          </div>
+          <div className="text-center mt-6 text-gray-500">Total Votes: 0</div>
         </div>
       </div>
     );
@@ -76,7 +78,7 @@ export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = f
               {VOTE_OPTIONS.map((option, index) => {
                 const count = ratings[index];
                 const percentage = calculatePercentage(count, totalVotes);
-                
+
                 return (
                   <div key={option.value} className="w-[15%] text-center">
                     <div className="text-lg font-medium">{percentage}%</div>
@@ -85,7 +87,7 @@ export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = f
                 );
               })}
             </div>
-            
+
             {/* Chart bars */}
             <div className="flex-1 flex items-end mb-4" style={{ height: "300px" }}>
               <div className="w-full flex justify-between items-end h-full gap-4 px-4">
@@ -93,15 +95,20 @@ export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = f
                   const count = ratings[index];
                   const maxCount = Math.max(...ratings);
                   const heightPercentage = maxCount > 0 ? (count / maxCount) * 100 : 0;
-                  
+
                   // Debug logging
                   if (index === 0) {
-                    console.log('Chart data:', { count, maxCount, heightPercentage, animateResults });
+                    console.log("Chart data:", {
+                      count,
+                      maxCount,
+                      heightPercentage,
+                      animateResults,
+                    });
                   }
-                  
+
                   return (
-                    <div 
-                      key={option.value} 
+                    <div
+                      key={option.value}
                       className="flex-1 bg-gray-900 rounded-t transition-all duration-700 ease-out"
                       style={{
                         height: animateResults && count > 0 ? `${heightPercentage}%` : "4px",
@@ -113,39 +120,34 @@ export function ResultsChart({ results, onNewQuestion, onViewSummary, isLive = f
                 })}
               </div>
             </div>
-            
+
             {/* Labels */}
             <div className="flex justify-between">
               {VOTE_OPTIONS.map((option) => (
-                <div key={option.value} className="flex-1 text-center text-sm text-gray-900 font-bold px-1">
-                  <div>{option.label.split(' ')[0]}</div>
-                  <div>{option.label.split(' ').slice(1).join(' ')}</div>
+                <div
+                  key={option.value}
+                  className="flex-1 text-center text-sm text-gray-900 font-bold px-1"
+                >
+                  <div>{option.label.split(" ")[0]}</div>
+                  <div>{option.label.split(" ").slice(1).join(" ")}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        
+
         <div className="text-center py-4 border-t border-gray-200">
-          <p className="text-lg font-medium">
-            Total Votes: {totalVotes}
-          </p>
+          <p className="text-lg font-medium">Total Votes: {totalVotes}</p>
         </div>
       </div>
 
       {!isLive && onNewQuestion && onViewSummary && (
         <div className="flex justify-center gap-4 mt-8">
-          <button
-            onClick={onNewQuestion}
-            className="btn-secondary"
-          >
+          <button onClick={onNewQuestion} className="btn-secondary">
             New Question
           </button>
-          
-          <button
-            onClick={onViewSummary}
-            className="btn-secondary"
-          >
+
+          <button onClick={onViewSummary} className="btn-secondary">
             View Summary
           </button>
         </div>

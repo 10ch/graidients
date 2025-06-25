@@ -1,5 +1,5 @@
 config:
-  target: "http://localhost:3000"  # Change to your production URL
+  target: "http://localhost:3000" # Change to your production URL
   phases:
     - duration: 20
       arrivalRate: 5
@@ -20,16 +20,16 @@ scenarios:
     flow:
       # Generate unique data for each virtual user
       - function: "generateVoteData"
-      
+
       # First, load the vote page (simulates QR code scan)
       - get:
           url: "/vote/{{ questionId }}"
           expect:
             - statusCode: 200
-      
+
       # Brief pause to "read" the question
       - think: 2
-      
+
       # Submit vote using direct Supabase call simulation
       # Note: Update this based on your actual implementation
       - post:

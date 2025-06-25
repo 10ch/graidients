@@ -1,9 +1,11 @@
 # Graidients AI Ethics Polling App
 
 ## Project Overview
+
 This is an interactive real-time polling application for AI ethics presentations. Presenters can pose ethical dilemmas and collect audience votes via QR codes.
 
 ## Key Features
+
 - **Session-based polling**: Each presentation gets a unique session ID
 - **QR code voting**: Audience members scan to vote on mobile devices
 - **Real-time results**: Live updates using Supabase subscriptions
@@ -13,6 +15,7 @@ This is an interactive real-time polling application for AI ethics presentations
 - **Custom branding**: Logo links to home, professional SVG assets
 
 ## Tech Stack
+
 - Next.js 14 with TypeScript
 - Supabase for database and real-time
 - Tailwind CSS for styling
@@ -21,12 +24,14 @@ This is an interactive real-time polling application for AI ethics presentations
 - Optimized for 500+ concurrent users
 
 ## Database Schema
+
 - `sessions`: Container for presentations
 - `questions`: Individual ethical dilemmas
 - `votes`: User responses (1-5 rating)
 - `vote_summary`: Aggregated view for fast results
 
 ## Security Measures
+
 - Input sanitization to prevent XSS
 - Rate limiting (1000 requests/minute per IP for shared WiFi)
 - Vote validation (1-5 range only)
@@ -34,6 +39,7 @@ This is an interactive real-time polling application for AI ethics presentations
 - Questions cannot be edited after creation
 
 ## User Flow
+
 1. Presenter starts session → Creates session ID
 2. Presenter enters AI use case → Generates QR code
 3. Audience scans QR → Opens mobile voting page
@@ -42,6 +48,7 @@ This is an interactive real-time polling application for AI ethics presentations
 6. Can add more questions or view session summary
 
 ## Performance Optimizations
+
 - Debounced real-time updates (2000ms for large audiences)
 - Database indexes on critical queries
 - Static generation for vote pages
@@ -51,6 +58,7 @@ This is an interactive real-time polling application for AI ethics presentations
 - Verified ready for 200+ concurrent users at Harvard event
 
 ## UI Improvements (Latest)
+
 - **Chart Labels**: Bold, larger (text-sm), darker (gray-900) for visibility
 - **Vote Options**: Simplified to "Totally Fine", "Mostly Okay", "Not Sure", "Feels Sketchy", "Crosses Line"
 - **Vote Confirmation**: Clean design showing "Your vote has been recorded" with inline display of choice
@@ -66,6 +74,7 @@ This is an interactive real-time polling application for AI ethics presentations
 - Professional favicon and logo SVGs
 
 ## Testing Tools
+
 - **Load testing**: `node load-testing/quick-test.js <URL> <QUESTION_ID> <NUM_USERS>`
 - **Harvard event test**: `node load-testing/harvard-test.js <SESSION_ID>` - Simulates 200 users voting on 7 questions
 - **Custom vote distributions**: `node load-testing/custom-votes.js <URL> <QUESTION_ID> <NUM_VOTES> <PATTERN>`
@@ -73,18 +82,75 @@ This is an interactive real-time polling application for AI ethics presentations
   - Example: `node load-testing/custom-votes.js https://app.graidients.ai abc-123 100 bimodal`
 
 ## Commands
+
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run lint` - Run ESLint
+- `npm run lint:fix` - Run ESLint and fix issues
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
 - `npm test` - Run tests
 - `npm run test:coverage` - Run tests with coverage
 
+## Code Quality Tools
+
+### ESLint
+
+- Configured with Next.js recommended rules and TypeScript support
+- Integrated with Prettier for consistent formatting
+- Custom rules:
+  - Unused variables must be prefixed with underscore
+  - Warns on `any` types
+  - Enforces React hooks rules
+- Config: `.eslintrc.json`
+- Ignore patterns: `.eslintignore`
+
+### Prettier
+
+- Enforces consistent code style across the project
+- Settings:
+  - Double quotes for strings
+  - Semicolons required
+  - Trailing commas (ES5 style)
+  - 100 character line width
+  - 2 space indentation
+- Config: `.prettierrc`
+- Ignore patterns: `.prettierignore`
+
+### Husky
+
+- Git hooks management for code quality enforcement
+- Runs automatically before commits
+- Prevents commits if linting/formatting fails
+- Setup: `.husky/pre-commit`
+
+### lint-staged
+
+- Runs linters only on staged files for efficiency
+- Pre-commit checks:
+  - ESLint with auto-fix for JS/TS files
+  - Prettier formatting for all supported files
+  - Only processes changed files
+- Config: `.lintstagedrc.json`
+
+### How It Works
+
+1. When you run `git commit`:
+   - Husky triggers the pre-commit hook
+   - lint-staged runs ESLint and Prettier on staged files
+   - If there are errors, commit is blocked
+   - If everything passes, commit proceeds
+2. This ensures all committed code meets quality standards
+3. No manual formatting needed - tools handle it automatically
+
 ## Environment Variables
+
 - `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous key (no line breaks!)
 - `NEXT_PUBLIC_APP_URL` - Application URL for QR codes
 
 ## Deployment
+
 - Deployed on Vercel at `app.graidients.ai`
 - Environment variables must be properly formatted (no line breaks)
 - Supabase authentication URLs configured for production domain
