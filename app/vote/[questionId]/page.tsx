@@ -131,11 +131,7 @@ export default function VotingView() {
             using AI to <strong>{question.question_text}</strong>.
           </p>
 
-          <div className="space-y-2 text-gray-600">
-            <p>Please wait for the voting to close.</p>
-            <p>Results will be tabulated on screen.</p>
-            <p className="text-sm mt-8 text-gray-500">You can close this tab.</p>
-          </div>
+          <p className="text-sm mt-8 text-gray-500">You can close this tab.</p>
         </div>
       </div>
     );
