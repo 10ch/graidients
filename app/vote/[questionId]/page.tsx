@@ -138,18 +138,18 @@ export default function VotingView() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col p-6 bg-white">
-      <header className="mb-8 mt-4 text-center">
+    <div className="min-h-screen flex flex-col p-4 bg-white">
+      <header className="mb-6 mt-2 text-center">
         <Logo className="mx-auto" />
       </header>
 
       <main className="flex-1 flex flex-col max-w-sm mx-auto w-full">
-        <div className="mb-8 text-center">
-          <h1 className="text-lg mb-4">How do you feel about using AI to:</h1>
+        <div className="mb-6 text-center">
+          <h1 className="text-lg mb-3">How do you feel about using AI to:</h1>
           <p className="text-gray-800 font-medium">{question.question_text}</p>
         </div>
 
-        <div className="space-y-3 mb-8">
+        <div className="space-y-2 mb-6">
           {VOTE_OPTIONS.map((option) => (
             <VotingButton
               key={option.value}

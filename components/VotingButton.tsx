@@ -20,7 +20,7 @@ export function VotingButton({
       onClick={onClick}
       disabled={disabled}
       className={`
-        w-full py-5 px-4 text-base font-medium rounded-lg transition-all duration-200
+        w-full py-3 px-4 text-base font-medium rounded-lg transition-all duration-200
         ${
           isSelected
             ? "bg-gray-600 text-white shadow-lg"
