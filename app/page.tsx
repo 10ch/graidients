@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Logo } from "@/components/Logo";
-import { EmptyChart } from "@/components/EmptyChart";
 import { supabase } from "@/lib/supabase";
 
 export default function Home() {
@@ -37,13 +36,11 @@ export default function Home() {
           <button
             onClick={handleStartSession}
             disabled={isCreating}
-            className="btn-primary disabled:opacity-50 mb-12"
+            className="btn-primary disabled:opacity-50"
           >
             {isCreating ? "Creating Session..." : "Start a Session"}
           </button>
         </div>
-
-        <EmptyChart />
       </div>
     </div>
   );

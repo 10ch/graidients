@@ -134,56 +134,6 @@ export default function PresenterView() {
             <div className="bg-white rounded-lg shadow-sm p-8">
               <QuestionInput onSubmit={handleSubmitQuestion} isLoading={isLoading} />
             </div>
-            <div className="mt-8 h-[500px] bg-white rounded-lg shadow-sm p-8">
-              <div className="h-full flex flex-col">
-                <div className="flex-1 flex items-end">
-                  <div className="w-full flex justify-between items-end">
-                    <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
-                    <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
-                    <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
-                    <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
-                    <div className="w-[15%] bg-gray-200 rounded-t" style={{ height: "0%" }}></div>
-                  </div>
-                </div>
-                <div className="flex justify-between mt-4 text-sm text-gray-900 font-bold">
-                  <div className="w-[15%] text-center">
-                    <span>
-                      Totally
-                      <br />
-                      Fine
-                    </span>
-                  </div>
-                  <div className="w-[15%] text-center">
-                    <span>
-                      Mostly
-                      <br />
-                      Okay
-                    </span>
-                  </div>
-                  <div className="w-[15%] text-center">
-                    <span>
-                      Not
-                      <br />
-                      Sure
-                    </span>
-                  </div>
-                  <div className="w-[15%] text-center">
-                    <span>
-                      Feels
-                      <br />
-                      Sketchy
-                    </span>
-                  </div>
-                  <div className="w-[15%] text-center">
-                    <span>
-                      Crosses
-                      <br />
-                      Line
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         )}
 
