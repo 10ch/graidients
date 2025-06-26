@@ -91,6 +91,7 @@ This is an interactive real-time polling application for AI ethics presentations
 - `npm run format:check` - Check code formatting
 - `npm test` - Run tests
 - `npm run test:coverage` - Run tests with coverage
+- **IMPORTANT**: Always run `npm run build` before pushing to ensure Vercel deployment will succeed
 
 ## Code Quality Tools
 
