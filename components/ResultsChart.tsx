@@ -89,7 +89,7 @@ export function ResultsChart({
             </div>
 
             {/* Chart bars */}
-            <div className="flex-1 flex items-end mb-4" style={{ height: "300px" }}>
+            <div className="flex items-end mb-4" style={{ height: "500px" }}>
               <div className="w-full flex justify-between items-end h-full gap-4 px-4">
                 {VOTE_OPTIONS.map((option, index) => {
                   const count = ratings[index];
