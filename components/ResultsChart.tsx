@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { VoteSummary } from "@/lib/types";
-import { calculatePercentage } from "@/lib/utils";
 import { VOTE_OPTIONS } from "@/lib/types";
 
 interface ResultsChartProps {
