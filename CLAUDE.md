@@ -1,3 +1,7 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 # Graidients AI Ethics Polling App
 
 ## Project Overview
@@ -16,36 +20,136 @@ This is an interactive real-time polling application for AI ethics presentations
 
 ## Tech Stack
 
-- Next.js 14 with TypeScript
+- Next.js 15.3 with TypeScript
 - Supabase for database and real-time
 - Tailwind CSS for styling
 - QR code generation with qrcode.js
 - Rate limiting middleware
 - Optimized for 500+ concurrent users
 
+## Architecture
+
+The app follows Next.js 14+ App Router architecture:
+
+```
+/app/                    # Next.js app router pages
+  ├── api/votes/        # REST API endpoint for vote submission
+  ├── presenter/        # Presenter control panel
+  ├── vote/            # Mobile voting interface
+  └── summary/         # Results dashboard
+
+/components/            # Reusable React components
+  ├── QRCodeDisplay    # QR code generation with logo
+  ├── ResultsChart     # Animated bar charts
+  └── VotingButton     # Mobile vote interface
+
+/lib/                   # Shared utilities
+  ├── supabase.ts      # Database client configuration
+  ├── types.ts         # TypeScript interfaces
+  └── utils.ts         # Helper functions
+
+/supabase/             # Database schema and migrations
+/load-testing/         # Performance testing scripts
+```
+
 ## Database Schema
 
 - `sessions`: Container for presentations
+  - `id` (uuid): Primary key
+  - `created_at`: Timestamp
 - `questions`: Individual ethical dilemmas
+  - `id` (uuid): Primary key
+  - `session_id`: Foreign key to sessions
+  - `use_case`: The AI use case being evaluated
+  - `is_active`: Whether voting is open
+  - `created_at`: Timestamp
 - `votes`: User responses (1-5 rating)
+  - `id` (uuid): Primary key
+  - `question_id`: Foreign key to questions
+  - `rating`: 1-5 scale value
+  - `device_fingerprint`: For duplicate prevention
+  - `ip_address`: For rate limiting
 - `vote_summary`: Aggregated view for fast results
+  - Pre-calculated counts per rating value
+
+## Commands
+
+### Development
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production (MUST run before pushing!)
+npm run start        # Start production server
+```
+
+### Code Quality
+
+```bash
+npm run lint         # Run ESLint
+npm run lint:fix     # Auto-fix linting issues
+npm run format       # Format with Prettier
+npm run format:check # Check formatting
+```
+
+### Testing
+
+```bash
+npm test             # Run tests
+npm run test:watch   # Run tests in watch mode
+npm run test:coverage # Generate coverage report
+```
+
+### Load Testing
+
+```bash
+# Basic load test
+node load-testing/quick-test.js <URL> <QUESTION_ID> <NUM_USERS>
+
+# Harvard event simulation (200 users, 7 questions)
+node load-testing/harvard-test.js <SESSION_ID>
+
+# Custom vote distributions
+node load-testing/custom-votes.js <URL> <QUESTION_ID> <NUM_VOTES> <PATTERN>
+# Patterns: random, skew-low, skew-high, bimodal, polarized, normal
+```
+
+## Setup Instructions
+
+1. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+2. **Set up Supabase**:
+   - Create a new Supabase project at https://supabase.com
+   - Run the SQL from `supabase/schema.sql` in the SQL editor
+   - Get your project URL and anon key from project settings
+
+3. **Configure environment variables**:
+   Create `.env.local` with:
+
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+   NEXT_PUBLIC_APP_URL=http://localhost:3000
+   ```
+
+   **Important**: Ensure the anon key has no line breaks!
+
+4. **Run development server**:
+   ```bash
+   npm run dev
+   ```
 
 ## Security Measures
 
 - Input sanitization to prevent XSS
 - Rate limiting (1000 requests/minute per IP for shared WiFi)
 - Vote validation (1-5 range only)
-- Duplicate vote prevention
+- Duplicate vote prevention via device fingerprinting
 - Questions cannot be edited after creation
-
-## User Flow
-
-1. Presenter starts session → Creates session ID
-2. Presenter enters AI use case → Generates QR code
-3. Audience scans QR → Opens mobile voting page
-4. Users select rating → Vote recorded with fingerprint
-5. Presenter closes voting → Shows animated results
-6. Can add more questions or view session summary
+- Row Level Security (RLS) enabled on all tables
 
 ## Performance Optimizations
 
@@ -57,102 +161,83 @@ This is an interactive real-time polling application for AI ethics presentations
 - Reduced real-time events (1/sec)
 - Verified ready for 200+ concurrent users at Harvard event
 
-## UI Improvements (Latest)
+### Performance Expectations
+
+- **50-100 users**: Standard infrastructure handles easily
+- **200 users**: Current setup tested and optimized for Harvard event
+- **500 users**: May need Supabase Pro plan for connection pooling
+- **1000+ users**: Consider Redis caching or dedicated WebSocket server
+
+## UI/UX Guidelines
 
 - **Chart Labels**: Bold, larger (text-sm), darker (gray-900) for visibility
-- **Vote Options**: Simplified to "Totally Fine", "Mostly Okay", "Not Sure", "Feels Sketchy", "Crosses Line"
-- **Vote Confirmation**: Clean design showing "Your vote has been recorded" with inline display of choice
-- **Persistent Vote Display**: Vote choices saved in localStorage and displayed on confirmation
-- Increased logo size and made it clickable (links to home)
-- Reduced whitespace in presenter view
-- Taller charts (500px) for better visibility
-- Question prompt: "Describe a use of AI..."
-- QR view shows: "How do you feel about using AI to [use case]?"
-- Results show: "Using AI to [use case]."
-- Vote count displayed below question on QR screen
-- Centered question text in matching-height boxes
-- Professional favicon and logo SVGs
-
-## Testing Tools
-
-- **Load testing**: `node load-testing/quick-test.js <URL> <QUESTION_ID> <NUM_USERS>`
-- **Harvard event test**: `node load-testing/harvard-test.js <SESSION_ID>` - Simulates 200 users voting on 7 questions
-- **Custom vote distributions**: `node load-testing/custom-votes.js <URL> <QUESTION_ID> <NUM_VOTES> <PATTERN>`
-  - Patterns: `random`, `skew-low`, `skew-high`, `bimodal`, `polarized`, `normal`
-  - Example: `node load-testing/custom-votes.js https://app.graidients.ai abc-123 100 bimodal`
-
-## Commands
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Run ESLint and fix issues
-- `npm run format` - Format code with Prettier
-- `npm run format:check` - Check code formatting
-- `npm test` - Run tests
-- `npm run test:coverage` - Run tests with coverage
-- **IMPORTANT**: Always run `npm run build` before pushing to ensure Vercel deployment will succeed
-
-## Code Quality Tools
-
-### ESLint
-
-- Configured with Next.js recommended rules and TypeScript support
-- Integrated with Prettier for consistent formatting
-- Custom rules:
-  - Unused variables must be prefixed with underscore
-  - Warns on `any` types
-  - Enforces React hooks rules
-- Config: `.eslintrc.json`
-- Ignore patterns: `.eslintignore`
-
-### Prettier
-
-- Enforces consistent code style across the project
-- Settings:
-  - Double quotes for strings
-  - Semicolons required
-  - Trailing commas (ES5 style)
-  - 100 character line width
-  - 2 space indentation
-- Config: `.prettierrc`
-- Ignore patterns: `.prettierignore`
-
-### Husky
-
-- Git hooks management for code quality enforcement
-- Runs automatically before commits
-- Prevents commits if linting/formatting fails
-- Setup: `.husky/pre-commit`
-
-### lint-staged
-
-- Runs linters only on staged files for efficiency
-- Pre-commit checks:
-  - ESLint with auto-fix for JS/TS files
-  - Prettier formatting for all supported files
-  - Only processes changed files
-- Config: `.lintstagedrc.json`
-
-### How It Works
-
-1. When you run `git commit`:
-   - Husky triggers the pre-commit hook
-   - lint-staged runs ESLint and Prettier on staged files
-   - If there are errors, commit is blocked
-   - If everything passes, commit proceeds
-2. This ensures all committed code meets quality standards
-3. No manual formatting needed - tools handle it automatically
-
-## Environment Variables
-
-- `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous key (no line breaks!)
-- `NEXT_PUBLIC_APP_URL` - Application URL for QR codes
+- **Vote Options**: "Totally Fine", "Mostly Okay", "Not Sure", "Feels Sketchy", "Crosses Line"
+- **Vote Confirmation**: Shows "Your vote has been recorded" with inline display of choice
+- **Persistent Vote Display**: Choices saved in localStorage
+- **Question Format**:
+  - Prompt: "Describe a use of AI..."
+  - QR view: "How do you feel about using AI to [use case]?"
+  - Results: "Using AI to [use case]."
+- **Chart Height**: 500px for better visibility in presentations
+- **Logo**: Clickable, links to home page
 
 ## Deployment
 
-- Deployed on Vercel at `app.graidients.ai`
+- Production URL: `app.graidients.ai`
+- Deployed on Vercel
 - Environment variables must be properly formatted (no line breaks)
 - Supabase authentication URLs configured for production domain
 - DNS: CNAME record pointing to Vercel deployment
+
+### Pre-deployment Checklist
+
+1. **Always run `npm run build` before pushing** to ensure Vercel deployment will succeed
+2. Verify environment variables in Vercel dashboard
+3. Test Supabase connection with production credentials
+4. Confirm rate limiting is appropriate for venue WiFi
+5. Run load test with expected audience size
+
+## Monitoring & Troubleshooting
+
+### Quick Diagnostics
+
+```bash
+# Check Supabase connection
+curl https://your-project.supabase.co/rest/v1/sessions
+
+# Monitor real-time connections
+# Check Supabase dashboard > Database > Realtime
+
+# Test vote endpoint
+curl -X POST https://app.graidients.ai/api/votes \
+  -H "Content-Type: application/json" \
+  -d '{"questionId":"test","rating":3}'
+```
+
+### Common Issues
+
+1. **"Failed to submit vote"**: Check Supabase connection and rate limits
+2. **Real-time not updating**: Verify WebSocket connections aren't blocked
+3. **QR code not working**: Ensure NEXT_PUBLIC_APP_URL is correct
+4. **High latency**: Consider upgrading Supabase plan for more connections
+
+## Code Quality Tools
+
+- **ESLint**: TypeScript-aware linting with Next.js rules
+- **Prettier**: Enforces consistent formatting (double quotes, semicolons)
+- **Husky**: Pre-commit hooks ensure code quality
+- **lint-staged**: Only checks changed files for efficiency
+
+Pre-commit checks run automatically and will:
+
+1. Fix linting issues where possible
+2. Format code with Prettier
+3. Block commit if errors remain
+
+## Important Notes
+
+- **IMPORTANT**: Always run `npm run build` before pushing to ensure Vercel deployment will succeed
+- Never commit sensitive data or API keys
+- Test with multiple devices before presentations
+- Have a fallback plan for network issues at venues
+- Monitor Supabase dashboard during live events
