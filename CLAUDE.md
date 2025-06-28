@@ -241,3 +241,60 @@ Pre-commit checks run automatically and will:
 - Test with multiple devices before presentations
 - Have a fallback plan for network issues at venues
 - Monitor Supabase dashboard during live events
+
+## V2 Development Setup
+
+The project has a parallel v2 development environment for testing new features without affecting production:
+
+### Infrastructure
+
+- **Production (v1)**:
+  - URL: https://app.graidients.ai
+  - Branch: `main`
+  - Supabase: Production project
+- **Development (v2)**:
+  - URL: https://graidients-v2.vercel.app
+  - Branch: `v2-development`
+  - Supabase: Separate v2 project (gibletlbzovpqvznubdj)
+
+### Development Workflow
+
+1. **Switch between environments**:
+
+   ```bash
+   ./switch-env.sh v2  # Switch to v2 development
+   ./switch-env.sh v1  # Switch to production/v1
+   ```
+
+2. **Environment files**:
+   - `.env.local.v2` - V2 development credentials
+   - `.env.local.prod` - Production credentials (optional)
+   - `.env.local.v2.example` - Template for v2 setup
+
+3. **Deployment**:
+   - Push to `main` → Deploys to production
+   - Push to `v2-development` → Deploys to v2 staging
+
+4. **Database schemas**:
+   - Production: `/supabase/schema.sql`
+   - V2 clean setup: `/supabase/schema-v2.sql`
+
+### Working with V2
+
+```bash
+# First time setup
+git checkout v2-development
+cp .env.local.v2.example .env.local.v2
+# Edit .env.local.v2 with your Supabase v2 credentials
+
+# Daily development
+./switch-env.sh v2
+npm run dev
+
+# Before pushing
+npm run build
+npm run lint
+git push origin v2-development
+```
+
+See `V2_SETUP.md` for detailed setup instructions.
