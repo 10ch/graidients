@@ -7,7 +7,7 @@ export function Logo({ className = "" }: { className?: string }) {
       <Link href="/" className="transition-opacity hover:opacity-80">
         <Image
           src="/logo.svg"
-          alt="Graidients - Center for Digital Thriving"
+          alt="Align on the Line - Center for Digital Thriving"
           width={450}
           height={130}
           className="w-auto h-[108px]"
