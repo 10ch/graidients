@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { supabase } from "@/lib/supabase";
 
@@ -40,6 +41,10 @@ export default function Home() {
           >
             {isCreating ? "Creating Session..." : "Start a Session"}
           </button>
+
+          <Link href="/faq" className="mt-6 text-blue-600 hover:text-blue-800 hover:underline">
+            Need help? View FAQ →
+          </Link>
         </div>
       </div>
     </div>
