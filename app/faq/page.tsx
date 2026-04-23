@@ -2,13 +2,13 @@ import FAQ from "@/components/FAQ";
 import Link from "next/link";
 
 export const metadata = {
-  title: "FAQ - Align on the Line AI Ethics Polling",
-  description: "Frequently asked questions about using Align on the Line AI Ethics Polling app",
+  title: "FAQ - Align on the Line AI",
+  description: "Frequently asked questions about using Align on the Line",
 };
 
 export default function FAQPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="flex-1 bg-gray-50">
       <nav className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">

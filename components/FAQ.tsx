@@ -3,55 +3,35 @@
 import { useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 
-interface FAQItem {
-  question: string;
-  answer: string;
-  category: "presenter" | "audience" | "general";
-}
-
 const faqItems: FAQItem[] = [
   // General Questions
   {
-    question: "What is Align on the Line AI Ethics Polling?",
+    question: "What is Align on the Line?",
     answer:
-      "Align on the Line is an interactive real-time polling app designed for AI ethics presentations. It allows presenters to pose ethical dilemmas about AI use cases and collect audience feedback through a simple voting interface.",
-    category: "general",
-  },
-  {
-    question: "How does the voting scale work?",
-    answer:
-      "We use a 5-point scale: 1) Totally Fine - No ethical concerns, 2) Mostly Okay - Minor concerns, 3) Not Sure - Neutral/undecided, 4) Feels Sketchy - Significant concerns, 5) Crosses Line - Major ethical issues. This helps capture nuanced opinions about AI ethics.",
+      "Align on the Line is an interactive real-time polling app designed to help you visualize where a group draws the line with using AI. It allows you to pose AI use cases and poll a group of people on how they feel about that use in a simple voting interface.",
     category: "general",
   },
   {
     question: "Is the app free to use?",
-    answer: "Yes, the app is completely free for both presenters and audience members.",
+    answer: "Yes, the app is completely free.",
     category: "general",
   },
   {
-    question: "What browsers are supported?",
+    question: "What do I do?",
     answer:
-      "The app works on all modern browsers including Chrome, Firefox, Safari, and Edge. Mobile browsers are fully supported for voting.",
-    category: "general",
-  },
-
-  // Presenter Questions
-  {
-    question: "How do I start a new polling session?",
-    answer:
-      "Go to the presenter page (/presenter) and click 'Start New Session'. You'll receive a unique session ID that you can share with your audience.",
+      "Think of a specific task or scenario or assignment and come up with a handful of potential ways to use AI for it. Then, go to the home page and click the 'Start a Session' button. Enter each way to use AI, one at a time, and vote on it as a group.",
     category: "presenter",
   },
   {
-    question: "How do I create a new question?",
+    question: "How do I format a question?",
     answer:
-      "In the presenter panel, type your AI use case in the input field (e.g., 'screen job applicants') and click 'Add Question'. The system will automatically format it as 'How do you feel about using AI to [your use case]?'",
+      "The system will automatically format it as 'How do you feel about using AI to [your use case]?'",
     category: "presenter",
   },
   {
     question: "How do I share the voting link with my audience?",
     answer:
-      "Each question automatically generates a QR code that appears on the presenter screen. Audience members can scan this code with their phones to access the voting page directly. The QR code includes your logo for easy recognition.",
+      "Each question automatically generates a QR code that appears on the presenter screen. Audience members can scan this code with their phones to access the voting page directly. There is also a url under the QR code if you are using computers instead of phones.",
     category: "presenter",
   },
   {
@@ -63,7 +43,7 @@ const faqItems: FAQItem[] = [
   {
     question: "Can I have multiple questions active at once?",
     answer:
-      "No, only one question can be active at a time. When you activate a new question, the previous one automatically closes for voting. This helps maintain focus and prevents confusion.",
+      "Yes and no. Only one question can be active at a time. But, there is a New Question button on the page with the results that allows you to add an additional use to your poll.",
     category: "presenter",
   },
   {
@@ -74,14 +54,12 @@ const faqItems: FAQItem[] = [
   },
   {
     question: "How do I view session summaries?",
-    answer:
-      "Visit /summary/session/[your-session-id] to see all questions and results from a specific session, or /summary/overall for aggregate results across all sessions.",
+    answer: "Click View Summary to see all questions and results from your session.",
     category: "presenter",
   },
   {
     question: "Is there a limit on audience size?",
-    answer:
-      "The app is optimized for audiences up to 500 people. For events expecting more than 200 attendees, contact us to ensure optimal performance.",
+    answer: "The app works best for audiences from ~5 to ~500 people.",
     category: "presenter",
   },
 
@@ -117,13 +95,13 @@ const faqItems: FAQItem[] = [
   {
     question: "Is my vote anonymous?",
     answer:
-      "Yes, votes are completely anonymous. We don't collect any personal information, only your rating choice and a device fingerprint to prevent duplicates.",
+      "Yes, votes are anonymous. We don't collect any personal information. To prevent duplicates, your browser generates a random ID (stored locally on your device) so you can only vote once per question. The ID doesn't identify anything about you or your device, and it doesn't follow you across other websites.",
     category: "audience",
   },
   {
     question: "What if I can't scan the QR code?",
     answer:
-      "If QR scanning isn't working, you can ask the presenter for the direct voting URL. It follows the format: app.graidients.ai/vote/[question-id]",
+      "If QR scanning isn't working, you can type the url under the QR code to access the question.",
     category: "audience",
   },
   {
@@ -159,52 +137,8 @@ export default function FAQ() {
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-2">Frequently Asked Questions</h1>
       <p className="text-gray-600 mb-8">
-        Everything you need to know about using Align on the Line AI Ethics Polling
+        Everything you need to know about using Align on the Line
       </p>
-
-      {/* Category Filters */}
-      <div className="flex flex-wrap gap-2 mb-8">
-        <button
-          onClick={() => setActiveCategory("all")}
-          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-            activeCategory === "all"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-          }`}
-        >
-          All Questions
-        </button>
-        <button
-          onClick={() => setActiveCategory("presenter")}
-          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-            activeCategory === "presenter"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-          }`}
-        >
-          For Presenters
-        </button>
-        <button
-          onClick={() => setActiveCategory("audience")}
-          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-            activeCategory === "audience"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-          }`}
-        >
-          For Audience
-        </button>
-        <button
-          onClick={() => setActiveCategory("general")}
-          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-            activeCategory === "general"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-          }`}
-        >
-          General
-        </button>
-      </div>
 
       {/* FAQ Items */}
       <div className="space-y-4">
@@ -241,12 +175,12 @@ export default function FAQ() {
         <p className="text-gray-700">
           If you couldn&apos;t find what you&apos;re looking for, please report an issue at{" "}
           <a
-            href="https://github.com/anthropics/claude-code/issues"
+            href="mailto:beck_tench@harvard.edu"
             className="text-blue-600 hover:underline"
             target="_blank"
             rel="noopener noreferrer"
           >
-            our GitHub repository
+            beck_tench@harvard.edu
           </a>
           .
         </p>

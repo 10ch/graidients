@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { QuestionInput } from "@/components/QuestionInput";
 import { QRCodeDisplay } from "@/components/QRCodeDisplay";
@@ -124,17 +123,9 @@ export default function PresenterView() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col p-8 bg-gray-50">
-      <header className="mb-6 text-center relative">
+    <div className="flex-1 flex flex-col p-8 bg-gray-50">
+      <header className="mb-6 text-center">
         <Logo className="mx-auto" />
-        <Link
-          href="/faq"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute top-0 right-0 text-blue-600 hover:text-blue-800 hover:underline"
-        >
-          Need help?
-        </Link>
       </header>
 
       <main className="flex-1 flex flex-col">

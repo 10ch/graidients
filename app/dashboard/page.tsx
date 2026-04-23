@@ -68,7 +68,7 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-8">
+      <div className="flex-1 flex items-center justify-center p-8">
         <div className="animate-pulse">
           <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
           <div className="h-4 bg-gray-200 rounded w-48 mx-auto"></div>
@@ -78,7 +78,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="flex-1 p-8">
       <header className="mb-12">
         <Logo />
       </header>

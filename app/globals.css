@@ -39,7 +39,7 @@
 
   /* Page container */
   .page-container {
-    @apply min-h-screen bg-[#fafafa] flex flex-col;
+    @apply flex-1 bg-[#fafafa] flex flex-col;
   }
 
   /* Content wrapper */

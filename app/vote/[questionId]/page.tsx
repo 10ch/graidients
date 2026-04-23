@@ -82,7 +82,7 @@ export default function VotingView() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="flex-1 flex items-center justify-center p-4">
         <div className="text-center">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
@@ -95,7 +95,7 @@ export default function VotingView() {
 
   if (!question) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="flex-1 flex items-center justify-center p-4">
         <div className="text-center">
           <h1 className="text-2xl font-medium mb-4">Question Not Found</h1>
           <p className="text-gray-600">This voting session may have ended.</p>
@@ -106,7 +106,7 @@ export default function VotingView() {
 
   if (!question.is_active) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="flex-1 flex items-center justify-center p-4">
         <div className="text-center">
           <h1 className="text-2xl font-medium mb-4">Voting Closed</h1>
           <p className="text-gray-600">Thank you for participating!</p>
@@ -119,7 +119,7 @@ export default function VotingView() {
     const votedOption = selectedRating ? VOTE_OPTIONS[selectedRating - 1].label : "your choice";
 
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-white">
+      <div className="flex-1 flex flex-col items-center justify-center p-6 bg-white">
         <Logo className="mb-12" />
 
         <div className="max-w-sm w-full text-center animate-fade-in">
@@ -138,7 +138,7 @@ export default function VotingView() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col p-4 bg-white">
+    <div className="flex-1 flex flex-col p-4 bg-white">
       <header className="mb-6 mt-2 text-center">
         <Logo className="mx-auto" />
       </header>
