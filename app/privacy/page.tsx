@@ -102,7 +102,7 @@ export default function PrivacyPage() {
 
           <h2 className="text-xl font-semibold mt-8 mb-3">Changes to this notice</h2>
           <p className="text-gray-700 mb-4">
-            If we update it in a meaningful way, we'll change the date at the top.
+            If we update it in a meaningful way, we&apos;ll change the date at the top.
           </p>
 
           <h2 className="text-xl font-semibold mt-8 mb-3">Contact</h2>

@@ -3,6 +3,12 @@
 import { useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 
+interface FAQItem {
+  question: string;
+  answer: string;
+  category: "presenter" | "audience" | "general";
+}
+
 const faqItems: FAQItem[] = [
   // General Questions
   {
@@ -114,9 +120,7 @@ const faqItems: FAQItem[] = [
 
 export default function FAQ() {
   const [openItems, setOpenItems] = useState<Set<number>>(new Set());
-  const [activeCategory, setActiveCategory] = useState<
-    "all" | "presenter" | "audience" | "general"
-  >("all");
+  const [activeCategory] = useState<"all" | "presenter" | "audience" | "general">("all");
 
   const toggleItem = (index: number) => {
     const newOpenItems = new Set(openItems);
